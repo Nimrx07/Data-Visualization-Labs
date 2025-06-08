@@ -1,1 +1,1 @@
-These are some some small lab exercises that I did in the 4210U Infromation Visualization Course. 
+This repository contains a collection of assignments completed using the R programming language for the 4210U Information Visualization course at Ontario Tech University. The projects primarily utilize ggplot2 for creating a range of visualizations, including bar plots, line charts, and a choropleth map. Additional libraries such as sf, rnaturalearth, dplyr, and various color palettes (e.g., viridis) were used for spatial mapping, data wrangling, and enhancing visual appeal.
