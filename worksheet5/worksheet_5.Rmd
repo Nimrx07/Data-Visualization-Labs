@@ -1,0 +1,93 @@
+---
+title: "Titanic Survival Analysis"
+output: html_document
+Name: Nimra Rehman
+Student Number: 100871702
+---
+
+## Part 1: Bar Graph
+
+```{r}
+
+library(car)            # For accessing the TitanicSurvival dataset
+library(tibble)         # For improved data structure and readability
+library(dplyr)          # For efficient data manipulation
+library(ggplot2)        # For creating visualizations
+library(RColorBrewer)   # For applying ColorBrewer palettes
+library(scales)         # For formatting axes as percentages
+
+# Load and convert Data
+data("TitanicSurvival")
+
+# Convert to tibble and store in 'd'
+d <- as_tibble(TitanicSurvival)
+
+# Remove rows with missing data in passengerClass or survived
+d <- d |> filter(!is.na(passengerClass) & !is.na(survived))
+
+# Summarizes the data
+df_q1_sum <- d |> 
+  # Group data by passengerClass and survived
+  group_by(passengerClass, survived) |> 
+  # Count rows in each group and drop grouping structure
+  summarise(total = n(), .groups = "drop")
+
+# Display the result
+df_q1_sum
+
+# Creating a stacked bar chart 
+
+ggplot(df_q1_sum, aes(x = passengerClass, y = total, fill = survived)) +
+   # Convert to proportions
+  geom_bar(stat = "identity", position = "fill") +  
+  # Format the y‐axis as percent
+  scale_y_continuous(labels = percent_format()) +                
+   # Apply Set2  palette
+  scale_fill_brewer(palette = "Set2", name = "Survived?") + 
+  
+  # Add labels and title
+  labs(                                         
+    x = "Passenger Class", 
+    y = "Proportion", 
+    title = "Survival Rates by Passenger Class"
+  ) +
+  theme_minimal()  
+
+```
+
+## Part 2: Pie Chart
+
+```{r}
+# Summarize the data 
+df_q2_sum <- d |> 
+  # Group data by passengerClass
+  group_by(passengerClass) |> 
+   # Count rows in each group and drop grouping structure
+  summarise(total = n(), .groups = "drop")
+
+# Display the result
+df_q2_sum
+
+# Creates a pie chart
+ggplot(df_q2_sum, aes(x = "", y = total, fill = passengerClass)) +
+  
+  #Create the base for the pie chart by using a bar chart with a bar width of 1
+  geom_bar(stat = "identity", width = 1) + 
+   # Convert to pie chart
+  coord_polar("y", start = 0) +    
+  # Applies Purples color palette from ColorBrewer to fill the pie chart segments
+  scale_fill_brewer(palette = "Purples") + 
+ 
+  theme_minimal() +                                
+  theme(
+    axis.text = element_blank(),      # Remove axis text
+    axis.ticks = element_blank(),     # Remove axis ticks
+    panel.grid = element_blank(),     # Remove panel grid lines for a tidy background
+    axis.title.x = element_blank(),   # Remove x-axis title
+    axis.title.y.left = element_blank() # Remove y-axis title
+  ) +
+ # Reverse the order of the pie chart
+scale_y_reverse() + 
+# Add a descriptive title to the chart
+ggtitle("Distribution of Passengers by Class")  
+```
