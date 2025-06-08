@@ -1,9 +1,4 @@
----
-title: "Titanic Survival Analysis"
-output: html_document
-Name: Nimra Rehman
-Student Number: 100871702
----
+
 
 ## Part 1: Bar Graph
 
