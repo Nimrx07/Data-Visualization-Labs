@@ -1,1 +1,1 @@
-These are some some small lab exercises that I did in the 4210U Infromation Visualixation Course. 
+These are some some small lab exercises that I did in the 4210U Infromation Visualization Course. 
